@@ -34,7 +34,7 @@
         }
       }
     },
-    "/api/q2/greeting": {
+    "/api/q2/greeting/{name}": {
       "get": {
         "tags": [
           "Q2"
@@ -42,7 +42,8 @@
         "parameters": [
           {
             "name": "name",
-            "in": "query",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "string"
             }

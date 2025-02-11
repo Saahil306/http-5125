@@ -15,7 +15,7 @@ namespace Assignment1.Controllers
         /// GET http://localhost:7123/api/q3/cube/4
         /// Response: 64
        
-        [HttpGet("cube/{base}")]
+        [HttpGet(template:"cube/{base}")]
         public int GetCube(int @base)
         {
             return (int)Math.Pow(@base, 3);

@@ -11,10 +11,11 @@ namespace Assignment1.Controllers
         /// </summary>
         /// <returns>A welcome message string.</returns>
         /// <example>
-        /// GET http://localhost:7123/api/q1/welcome
+       
         /// Response: "Welcome to 5125!"
         /// </example>
-        [HttpGet("welcome")]
+        [HttpGet(template:"welcome")]
+
         public string GetWelcomeMessage()
         {
             return "Welcome to 5125!";

@@ -22,7 +22,7 @@
   {
     "ContainingType": "Assignment1.Controllers.Q2Controller",
     "Method": "GetGreeting",
-    "RelativePath": "api/q2/greeting",
+    "RelativePath": "api/q2/greeting/{name}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -30,7 +30,7 @@
       {
         "Name": "name",
         "Type": "System.String",
-        "IsRequired": false
+        "IsRequired": true
       }
     ],
     "ReturnTypes": [

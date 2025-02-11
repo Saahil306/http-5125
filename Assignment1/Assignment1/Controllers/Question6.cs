@@ -12,10 +12,10 @@ namespace Assignment1.Controllers
         /// <param name="side">The side length of the hexagon.</param>
         /// <returns>The area of the hexagon.</returns>
         /// <example>
-        /// GET http://localhost:7123/api/q6/hexagon?side=1
+        
         /// Response: 2.598076211353316
         /// </example>
-        [HttpGet("hexagon")]
+        [HttpGet(template:"hexagon")]
         public ActionResult<double> GetHexagonArea([FromQuery] double side)
         {
             if (side <= 0)

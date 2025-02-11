@@ -11,10 +11,9 @@ namespace Assignment1.Controllers
         /// </summary>
         /// <returns>The first line of the knock-knock joke.</returns>
         /// <example>
-        /// POST http://localhost:7123/api/q4/knockknock
         /// Response: "Who’s there?"
         /// </example>
-        [HttpPost("knockknock")]
+        [HttpPost(template:"knockknock")]
         public string GetKnockKnockJoke()
         {
             return "Who’s there?";

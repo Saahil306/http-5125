@@ -17,11 +17,11 @@ namespace Assignment1.Controllers
         /// <param name="large">The number of large SquashFellows ordered.</param>
         /// <returns>The order summary including price, tax, and total.</returns>
         /// <example>
-        /// POST http://localhost:7123/api/q8/squashfellows
+        
         /// Request body: Small=1&Large=1
         /// Response: "1 Small @ $25.50 = $25.50; 1 Large @ $40.50 = $40.50; Subtotal = $66.00; Tax = $8.58 HST; Total = $74.58"
         /// </example>
-        [HttpPost("squashfellows")]
+        [HttpPost(template:"squashfellows")]
         public ActionResult<string> PostOrderSummary([FromForm] int small, [FromForm] int large)
         {
             if (small < 0 || large < 0)
