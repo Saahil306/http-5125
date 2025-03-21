@@ -1,0 +1,45 @@
+@model IEnumerable<SchoolAPI.Models.Teacher>
+
+<h2>Teachers List</h2>
+
+<!-- Search Form for Hire Date -->
+<form method="get" action="/TeacherPage/Search" style="margin-bottom: 20px;">
+    <label>Start Date:</label>
+    <input type="date" name="startDate" required />
+    <label>End Date:</label>
+    <input type="date" name="endDate" required />
+    <button type="submit" style="background-color: #007bff; color: white; border: none; padding: 5px 10px; cursor: pointer;">
+        Search
+    </button>
+</form>
+
+@if (ViewData["ErrorMessage"] != null)
+{
+    <p style="color: red;">@ViewData["ErrorMessage"]</p>
+}
+
+<!-- Table for Teachers -->
+<table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd;">
+    <tr style="background-color: #007bff; color: white;">
+        <th style="padding: 10px;">ID</th>
+        <th style="padding: 10px;">Name</th>
+        <th style="padding: 10px;">Hire Date</th>
+        <th style="padding: 10px;">Subject</th>
+        <th style="padding: 10px;">Actions</th>
+    </tr>
+    @foreach (var teacher in Model)
+    {
+        <tr style="border-bottom: 1px solid #ddd;">
+            <td style="padding: 10px;">@teacher.TeacherId</td>
+            <td style="padding: 10px;">@teacher.Name</td>
+            <td style="padding: 10px;">@teacher.HireDate.ToShortDateString()</td>
+            <td style="padding: 10px;">@teacher.Subject</td>
+            <td style="padding: 10px;">
+                <a href="/TeacherPage/Show/@teacher.TeacherId" 
+                   style="background-color: #28a745; color: white; padding: 5px 10px; text-decoration: none; border-radius: 5px;">
+                   View
+                </a>
+            </td>
+        </tr>
+    }
+</table>

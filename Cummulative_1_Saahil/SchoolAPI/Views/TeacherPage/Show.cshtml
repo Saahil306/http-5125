@@ -1,0 +1,32 @@
+@model SchoolAPI.Models.Teacher
+
+<h2>Teacher Details</h2>
+
+<div style="border: 1px solid #ddd; padding: 20px; border-radius: 10px; background-color: #f9f9f9;">
+    <p><strong>ID:</strong> @Model.TeacherId</p>
+    <p><strong>Name:</strong> @Model.Name</p>
+    <p><strong>Hire Date:</strong> @Model.HireDate.ToShortDateString()</p>
+    <p><strong>Subject:</strong> @Model.Subject</p>
+</div>
+
+<h3>Courses Taught</h3>
+@if (Model.Courses != null && Model.Courses.Any())
+{
+    <ul style="list-style-type: none; padding: 0;">
+        @foreach (var course in Model.Courses)
+        {
+            <li style="padding: 10px; background-color: #e9ecef; margin-bottom: 5px; border-radius: 5px;">
+                📘 @course.CourseName
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p style="color: red;">No courses assigned to this teacher.</p>
+}
+
+<a href="/TeacherPage/List" 
+   style="display: inline-block; margin-top: 20px; padding: 10px 15px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+   Back to List
+</a>
