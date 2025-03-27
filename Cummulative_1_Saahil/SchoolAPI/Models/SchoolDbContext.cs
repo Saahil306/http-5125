@@ -20,11 +20,11 @@ namespace SchoolAPI.Models
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
-    modelBuilder.Entity<Course>()
-        .HasOne(c => c.Teacher)
-        .WithMany(t => t.Courses)
-        .HasForeignKey(c => c.TeacherId);
-}
+        {
+            modelBuilder.Entity<Course>()
+                .HasOne(c => c.Teacher)
+                .WithMany(t => t.Courses)
+                .HasForeignKey(c => c.TeacherId);
+        }
     }
 }

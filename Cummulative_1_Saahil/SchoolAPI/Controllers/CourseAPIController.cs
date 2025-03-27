@@ -38,5 +38,44 @@ namespace SchoolAPI.Controllers
             }
             return course;
         }
+
+        /// <summary>
+        /// Creates a new course in the database.
+        /// Ensures the course name is not empty.
+        /// </summary>
+        /// <param name="course">The course object to create</param>
+        [HttpPost]
+        public async Task<ActionResult<Course>> PostCourse(Course course)
+        {
+            if (string.IsNullOrWhiteSpace(course.CourseName))
+            {
+                return BadRequest(new { message = "Error: Course name cannot be empty." });
+            }
+
+            _context.Courses.Add(course);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetCourse), new { id = course.CourseId }, course);
+        }
+
+        /// <summary>
+        /// Deletes a course from the database.
+        /// Returns an error message if the course does not exist.
+        /// </summary>
+        /// <param name="id">The ID of the course to delete</param>
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCourse(int id)
+        {
+            var course = await _context.Courses.FindAsync(id);
+            if (course == null)
+            {
+                return NotFound(new { message = "Error: Course not found.", courseId = id });
+            }
+
+            _context.Courses.Remove(course);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Course successfully deleted.", courseId = id });
+        }
     }
 }

@@ -24,6 +24,6 @@ app.UseRouting();
 app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=TeacherPage}/{action=List}/{id?}"
+    pattern: "{controller=Teacher}/{action=List}/{id?}"
 );
 app.Run();

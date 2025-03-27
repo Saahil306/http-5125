@@ -27,8 +27,8 @@ This project is an **ASP.NET Core Web API and MVC** application that manages tea
 
 ### **Get All Teachers and get by ID **
 
-Teachers List -->	http://localhost:5288/TeacherPage/List
-Single Teacher Details -->	http://localhost:5288/TeacherPage/Show/{id}
+Teachers List -->	http://localhost:5288/Teacher/List
+Single Teacher Details -->	http://localhost:5288/Teacher/Show/{id}
 
 
 ## **API Endpoints**

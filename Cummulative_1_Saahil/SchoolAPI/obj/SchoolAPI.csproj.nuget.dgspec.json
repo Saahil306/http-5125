@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Saahil\\Assignment_4\\SchoolAPI\\SchoolAPI.csproj": {}
+    "C:\\Saahil\\Assignment_4_Saahil\\SchoolAPI\\SchoolAPI.csproj": {}
   },
   "projects": {
-    "C:\\Saahil\\Assignment_4\\SchoolAPI\\SchoolAPI.csproj": {
+    "C:\\Saahil\\Assignment_4_Saahil\\SchoolAPI\\SchoolAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Saahil\\Assignment_4\\SchoolAPI\\SchoolAPI.csproj",
+        "projectUniqueName": "C:\\Saahil\\Assignment_4_Saahil\\SchoolAPI\\SchoolAPI.csproj",
         "projectName": "SchoolAPI",
-        "projectPath": "C:\\Saahil\\Assignment_4\\SchoolAPI\\SchoolAPI.csproj",
+        "projectPath": "C:\\Saahil\\Assignment_4_Saahil\\SchoolAPI\\SchoolAPI.csproj",
         "packagesPath": "C:\\Users\\saahil\\.nuget\\packages\\",
-        "outputPath": "C:\\Saahil\\Assignment_4\\SchoolAPI\\obj\\",
+        "outputPath": "C:\\Saahil\\Assignment_4_Saahil\\SchoolAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\saahil\\AppData\\Roaming\\NuGet\\NuGet.Config"

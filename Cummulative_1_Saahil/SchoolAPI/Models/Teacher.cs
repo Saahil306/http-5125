@@ -17,9 +17,16 @@ namespace SchoolAPI.Models
         [MaxLength(200)]
         public string Subject { get; set; }
 
+        [Required]
+        [MaxLength(10)]
+        public string EmployeeNumber { get; set; }
+
+        [MaxLength(15)]
+        public string TeacherWorkPhone { get; set; } // New Field
+
         /// <summary>
         /// Navigation property for the courses taught by this teacher.
         /// </summary>
-        public List<Course> Courses { get; set; }
+        public List<Course> Courses { get; set; } = new List<Course>(); // ✅ FIX: Initialized the list
     }
 }

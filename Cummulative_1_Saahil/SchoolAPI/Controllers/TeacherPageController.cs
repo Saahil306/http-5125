@@ -4,11 +4,11 @@ using SchoolAPI.Models;
 
 namespace SchoolAPI.Controllers
 {
-    public class TeacherPageController : Controller
+    public class TeacherController : Controller
     {
         private readonly SchoolDbContext _context;
 
-        public TeacherPageController(SchoolDbContext context)
+        public TeacherController(SchoolDbContext context)
         {
             _context = context;
         }
@@ -29,7 +29,7 @@ namespace SchoolAPI.Controllers
         public async Task<IActionResult> Show(int id)
         {
             var teacher = await _context.Teachers
-                .Include(t => t.Courses) // ✅ Include courses taught by this teacher
+                .Include(t => t.Courses)
                 .FirstOrDefaultAsync(t => t.TeacherId == id);
 
             if (teacher == null)
@@ -40,28 +40,65 @@ namespace SchoolAPI.Controllers
         }
 
         /// <summary>
-        /// Searches for teachers within a specified hire date range.
+        /// Displays the form to add a new teacher.
         /// </summary>
-        /// <param name="startDate">Start date of hire range</param>
-        /// <param name="endDate">End date of hire range</param>
-        public async Task<IActionResult> Search(DateTime? startDate, DateTime? endDate)
+        public IActionResult New()
         {
-            if (startDate == null || endDate == null)
+            return View();
+        }
+
+        /// <summary>
+        /// Handles the submission of the new teacher form.
+        /// </summary>
+        [HttpPost]
+        public async Task<IActionResult> Create(Teacher teacher)
+        {
+            if (string.IsNullOrWhiteSpace(teacher.Name))
             {
-                ViewData["ErrorMessage"] = "Please select both start and end dates.";
-                return View("List", await _context.Teachers.ToListAsync());
+                ViewData["ErrorMessage"] = "Error: Teacher name cannot be empty.";
+                return View("New");
             }
 
-            var teachers = await _context.Teachers
-                .Where(t => t.HireDate >= startDate && t.HireDate <= endDate)
-                .ToListAsync();
-
-            if (teachers.Count == 0)
+            if (teacher.HireDate > DateTime.Now)
             {
-                ViewData["ErrorMessage"] = "No teachers found in the selected date range.";
+                ViewData["ErrorMessage"] = "Error: Hire date cannot be in the future.";
+                return View("New");
             }
 
-            return View("List", teachers);
+            _context.Teachers.Add(teacher);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("List");
+        }
+
+        /// <summary>
+        /// Displays the confirmation page before deleting a teacher.
+        /// </summary>
+        /// <param name="id">The ID of the teacher</param>
+        public async Task<IActionResult> DeleteConfirm(int id)
+        {
+            var teacher = await _context.Teachers.FindAsync(id);
+            if (teacher == null)
+            {
+                return NotFound();
+            }
+            return View(teacher);
+        }
+
+        /// <summary>
+        /// Handles the deletion of a teacher after confirmation.
+        /// </summary>
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var teacher = await _context.Teachers.FindAsync(id);
+            if (teacher == null)
+            {
+                return NotFound();
+            }
+
+            _context.Teachers.Remove(teacher);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("List");
         }
     }
 }

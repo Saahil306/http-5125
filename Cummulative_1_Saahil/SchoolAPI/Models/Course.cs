@@ -21,6 +21,6 @@ namespace SchoolAPI.Models
         /// <summary>
         /// Navigation property to associate a course with a teacher.
         /// </summary>
-        public Teacher Teacher { get; set; }
+        public Teacher? Teacher { get; set; } // ✅ FIX: Made nullable
     }
 }
