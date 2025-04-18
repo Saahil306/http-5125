@@ -22,11 +22,14 @@ namespace SchoolAPI.Models
         public string EmployeeNumber { get; set; }
 
         [MaxLength(15)]
-        public string TeacherWorkPhone { get; set; } // New Field
+        public string TeacherWorkPhone { get; set; }
+
+        [Range(0, double.MaxValue)]
+        public decimal Salary { get; set; } // ✅ New Field
 
         /// <summary>
         /// Navigation property for the courses taught by this teacher.
         /// </summary>
-        public List<Course> Courses { get; set; } = new List<Course>(); // ✅ FIX: Initialized the list
+        public List<Course> Courses { get; set; } = new List<Course>();
     }
 }

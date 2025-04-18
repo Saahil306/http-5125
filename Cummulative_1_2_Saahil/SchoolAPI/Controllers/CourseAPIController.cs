@@ -77,5 +77,45 @@ namespace SchoolAPI.Controllers
 
             return Ok(new { message = "Course successfully deleted.", courseId = id });
         }
+
+        /// <summary>
+        /// Updates an existing course.
+        /// </summary>
+        /// <param name="id">The ID of the course to update.</param>
+        /// <param name="course">The updated course object.</param>
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCourse(int id, [FromBody] Course course)
+        {
+            if (id != course.CourseId)
+            {
+                return BadRequest("Course ID mismatch.");
+            }
+
+            var existingCourse = await _context.Courses.FindAsync(id);
+            if (existingCourse == null)
+            {
+                return NotFound(new { message = "Error: Course not found.", courseId = id });
+            }
+
+            // Validate course name
+            if (string.IsNullOrWhiteSpace(course.CourseName))
+            {
+                return BadRequest(new { message = "Error: Course name cannot be empty." });
+            }
+
+            // Update course properties
+            existingCourse.CourseName = course.CourseName;
+            existingCourse.TeacherId = course.TeacherId; // Assuming TeacherId can be updated
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                return Ok(new { message = "Course updated successfully", courseId = id });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Error updating course: " + ex.Message);
+            }
+        }
     }
 }

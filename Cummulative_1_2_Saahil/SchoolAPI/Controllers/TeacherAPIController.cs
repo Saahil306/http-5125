@@ -98,5 +98,86 @@ namespace SchoolAPI.Controllers
 
             return Ok(new { message = "Teacher successfully deleted.", teacherId = id });
         }
+
+        /// <summary>
+        /// Updates an existing Teacher in the database.
+        /// </summary>
+        /// <param name="id">The ID of the Teacher to update</param>
+        /// <param name="updatedTeacher">The updated Teacher object</param>
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateTeacher(int id, [FromBody] Teacher updatedTeacher)
+        {
+            if (id != updatedTeacher.TeacherId)
+            {
+                return BadRequest("Teacher ID mismatch");
+            }
+
+            var existingTeacher = await _context.Teachers.FindAsync(id);
+            if (existingTeacher == null)
+            {
+                return NotFound(new { message = "Error: Teacher not found.", teacherId = id });
+            }
+
+            // Server-side validation for update
+            var validationResult = ValidateTeacher(updatedTeacher, isNew: false);
+            if (validationResult != null)
+            {
+                return BadRequest(new { message = validationResult });
+            }
+
+            // Update properties
+            existingTeacher.Name = updatedTeacher.Name;
+            existingTeacher.HireDate = updatedTeacher.HireDate;
+            existingTeacher.Subject = updatedTeacher.Subject;
+            existingTeacher.EmployeeNumber = updatedTeacher.EmployeeNumber;
+            existingTeacher.TeacherWorkPhone = updatedTeacher.TeacherWorkPhone;
+            existingTeacher.Salary = updatedTeacher.Salary;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                return Ok(new { message = "Teacher updated successfully", teacherId = existingTeacher.TeacherId });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Error updating teacher: " + ex.Message);
+            }
+        }
+
+        // Private validation helper
+        private string? ValidateTeacher(Teacher teacher, bool isNew)
+        {
+            // Server-side validation for Name
+            if (string.IsNullOrWhiteSpace(teacher.Name))
+            {
+                return "Error: Teacher name cannot be empty.";
+            }
+
+            // Server-side validation for Hire Date
+            if (teacher.HireDate > DateTime.Now)
+            {
+                return "Error: Hire date cannot be in the future.";
+            }
+
+            // Server-side validation for Employee Number format
+            if (!Regex.IsMatch(teacher.EmployeeNumber, @"^T\d+$"))
+            {
+                return "Error: Employee Number must start with 'T' followed by digits.";
+            }
+
+            // Server-side validation for Salary
+            if (teacher.Salary < 0)
+            {
+                return "Error: Salary cannot be negative.";
+            }
+
+            // Validate if Employee Number already exists (for new teachers)
+            if (isNew && _context.Teachers.Any(t => t.EmployeeNumber == teacher.EmployeeNumber))
+            {
+                return "Error: Employee Number already exists.";
+            }
+
+            return null;
+        }
     }
 }
